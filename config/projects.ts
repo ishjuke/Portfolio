@@ -41,55 +41,37 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "tidewatch",
-    title: "Tidewatch",
-    year: "2025",
-    status: "in progress",
-    blurb:
-      "I kept missing low tide for tide-pooling, so I built a tiny dashboard that texts me the good windows.",
-    stack: ["TypeScript", "Next.js", "NOAA API", "Cron"],
-    links: [
-      { label: "Source", href: "https://github.com/yourusername/tidewatch" },
-    ],
-    body: [
-      "Tide-pooling is only good for about an hour around the lowest tides, and the best ones happen at inconvenient times. I was constantly checking tide charts and doing mental math, then forgetting anyway.",
-      "Tidewatch pulls the NOAA tide predictions for my local station, finds the daytime low tides below a threshold, and sends me a text the evening before. The whole thing is a single cron job and about 200 lines.",
-      "The interesting part turned out to be the time-zone and daylight-savings handling — NOAA returns times in station-local time, and getting the \"is this during daylight\" check right was fiddlier than the API call itself. I learned more about JavaScript date handling here than in years of regular work.",
-    ],
-  },
-  {
-    slug: "thirty-six-views",
-    title: "Thirty-Six Views",
-    year: "2024",
+    slug: "ecotrack",
+    title: "EcoTrack",
+    year: "2026",
     status: "shipped",
     blurb:
-      "A generative art piece that redraws the same hillside thirty-six different ways every time you reload.",
-    stack: ["JavaScript", "Canvas", "Perlin noise"],
+      "A carbon-footprint tracker that turns everyday choices into CO₂e estimates, so making sustainable decisions doesn't require a research project.",
+    stack: ["React", "JavaScript", "Python", "Flask", "HTML", "CSS"],
     links: [
-      { label: "Live", href: "https://example.com" },
-      { label: "Source", href: "https://github.com/yourusername/thirty-six-views" },
+      { label: "Source", href: "https://github.com/andesc2007/apsc103" },
     ],
     body: [
-      "Inspired by Hokusai's thirty-six views of Mount Fuji — the idea of returning to one subject again and again and finding it different each time.",
-      "Each reload generates a single hillside from layered Perlin noise, then renders it in one of thirty-six palettes and weather conditions. No two are quite the same, but they're all recognizably the same hill.",
-      "This was my first real dive into generative art, and the hardest lesson was restraint: my early versions threw every effect at the canvas at once. Cutting back until each piece had one idea is what made it feel composed instead of noisy.",
+      "Built at Queen's University for APSC 103, EcoTrack started from a problem a lot of students share: wanting to make more sustainable choices, but not having a simple way to understand the environmental impact of everyday actions.",
+      "So we built a web tool that lets users estimate and monitor their carbon emissions across categories like product purchases, transportation, and household energy use. You enter an activity, get an estimated CO₂e value, and watch your cumulative impact build up through an interactive dashboard — plus lower-carbon recommendations to help you make more informed decisions.",
+      "The prototype came together with a React front end talking to a Python and Flask backend that handled the emissions estimates. Wiring the two halves together — getting the front end and the API to agree on how data flowed — was where most of the real learning happened, and where an idea on paper became something that actually ran.",
     ],
   },
   {
-    slug: "claveau",
-    title: "Claveau",
-    year: "2023",
-    status: "archived",
+    slug: "aitivity",
+    title: "AItivity",
+    year: "2025",
+    status: "shipped",
     blurb:
-      "Custom keyboard firmware for a split board I built, with a layer layout tuned entirely to how my own hands move.",
-    stack: ["C", "QMK", "Soldering"],
+      "A hackathon build with a team — an AI productivity tool that helps people carve focus out of overloaded schedules.",
+    stack: ["TypeScript"],
     links: [
-      { label: "Write-up", href: "https://example.com/blog/claveau" },
+      { label: "Source", href: "https://github.com/danii-ree/AItivity" },
     ],
     body: [
-      "I built a split ergonomic keyboard from a kit, which meant I had to write my own firmware layout. That rabbit hole went deep.",
-      "Claveau is my QMK configuration: a base layer plus three function layers reached with the thumbs, designed around the words and shortcuts I actually type most. I logged my own keypresses for a week first and laid out the keys to minimize finger travel for my real usage, not a generic average.",
-      "I've since moved to a different board, so this is archived — but the process of measuring my own behavior and designing around the data, rather than around convention, is something I think about constantly now.",
+      "AItivity was built with a team during a hackathon, around a problem everyone in the room recognized: busy schedules make it hard to be productive, and generic to-do apps don't really help.",
+      "The idea was an AI-assisted productivity website that works with how people actually plan their days, rather than handing them another empty list to fill in.",
+      "Beyond the build itself, the project was a lesson in collaboration under a deadline — splitting the work across a team, merging everyone's pieces into one thing that ran, and shipping something real in the time we had. That pressure taught me as much as the code did.",
     ],
   },
 ];

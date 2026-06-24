@@ -7,37 +7,38 @@
 
 export const site = {
   // Your name as it should appear in the nav and page title.
-  name: "Your Name",
+  name: "Ishan Bijukuchhay",
 
   // A short handle/initials shown in the nav mark. Keep it tiny (1–3 chars).
-  mark: "YN",
+  mark: "IB",
 
   // The one-line thesis under your name in the hero. This is the most important
   // sentence on the site — say what you make and why it matters to you.
   tagline:
-    "I build small things for the joy of it — and keep a log of what I learn.",
+    "Learning by building — these are the projects that taught me something.",
 
   // A slightly longer intro for the About section. 2–4 sentences.
   about:
-    "I'm a developer who makes things outside of work because I can't help it. " +
-    "These are passion projects — started from a specific itch, built mostly at " +
-    "night, and shared here in roughly the order I made them. Some are finished, " +
-    "some are perpetual works in progress. All of them taught me something.",
+    "I'm Ishan — a student who builds things to understand how they work. " +
+    "Some of these started at hackathons, others as coursework I pushed past " +
+    "the assignment, but they all began with a real problem worth solving. " +
+    "Each one taught me something I couldn't have picked up from a tutorial.",
 
   // The email your contact form sends TO. Also shown as a mailto fallback.
-  email: "you@example.com",
+  email: "ishanbijukuchhay@gmail.com",
 
   // Social / external links. Remove any you don't want; the footer maps over them.
   links: {
-    github: "https://github.com/yourusername",
+    github: "https://github.com/ishjuke",
     // Set any of these to "" to hide them.
     bluesky: "",
-    linkedin: "https://www.linkedin.com/in/yourusername",
+    linkedin: "https://www.linkedin.com/in/ishan-bijukuchhay/",
     mastodon: "",
   },
 
-  // Used for SEO / Open Graph. Set to your real domain before deploying.
-  url: "https://yourdomain.com",
+  // Used for SEO / Open Graph. Set this to your real Vercel URL once you've
+  // picked the final name (e.g. https://ishjuke.vercel.app).
+  url: "https://ishjuke.vercel.app",
 } as const;
 
 export type SiteConfig = typeof site;
