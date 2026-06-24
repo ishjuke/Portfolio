@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+   DESIGN TOKENS
+
+   The whole palette lives here. To rebrand the site, change these values —
+   nothing else references raw colors. The accent (cobalt by default) is the
+   one bold choice; everything else stays quiet so it can carry the page.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --background: #fbfaf8; /* warm paper */
+  --foreground: #191815; /* near-black ink */
+  --muted: #f1efe9; /* subtle fill for tags / hovers */
+  --muted-foreground: #6f6b63; /* secondary text */
+  --card: #ffffff;
+  --border: #e8e4dc;
+  --accent: #2438e8; /* the signature: electric cobalt */
+  --accent-foreground: #ffffff;
+}
+
+.dark {
+  --background: #141311; /* warm near-black (not pure black) */
+  --foreground: #efede7;
+  --muted: #211f1b;
+  --muted-foreground: #9a958b;
+  --card: #1b1a17;
+  --border: #2c2924;
+  --accent: #8a99ff; /* lifted cobalt, readable on dark */
+  --accent-foreground: #15131f;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so headings don't hide under the sticky nav. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "kern", "liga";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Visible keyboard focus everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+@layer components {
+  /* A monospace "eyebrow" label — used above sections and as metadata.
+     This is part of the field-notes identity. */
+  .eyebrow {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+}
+
+/* Respect users who prefer reduced motion: disable all animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
