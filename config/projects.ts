@@ -19,7 +19,7 @@ export interface ProjectLink {
 
 export interface ProjectImage {
   // Path to an image in the /public folder, written from the root.
-  // e.g. a file at public/ecotrack.jpeg is referenced as "/ecotrack.jpeg".
+  // e.g. a file at public/ecotrack.png is referenced as "/ecotrack.png".
   src: string;
   // Short description of what the screenshot shows (used as the caption
   // and for accessibility). Keep it to a few words.
@@ -79,9 +79,9 @@ export const projects: Project[] = [
       "A carbon-footprint tracker that turns everyday choices into CO₂e estimates, so making sustainable decisions doesn't require a research project.",
     stack: ["React", "JavaScript", "Python", "Flask", "HTML", "CSS"],
     images: [
-      { src: "/ecotrack-calculator.jpeg", alt: "EcoTrack carbon footprint calculator" },
-      { src: "/ecotrack-comparison.jpeg", alt: "Weekly comparison and dashboard summary" },
-      { src: "/ecotrack-leaderboard.jpeg", alt: "Friends leaderboard and activity feed" },
+      { src: "/ecotrack-calculator.png", alt: "EcoTrack carbon footprint calculator" },
+      { src: "/ecotrack-comparison.png", alt: "Weekly comparison and dashboard summary" },
+      { src: "/ecotrack-leaderboard.png", alt: "Friends leaderboard and activity feed" },
     ],
     links: [
       { label: "Source", href: "https://github.com/andesc2007/apsc103" },
