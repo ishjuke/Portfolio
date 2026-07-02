@@ -17,6 +17,15 @@ export interface ProjectLink {
   href: string;
 }
 
+export interface ProjectImage {
+  // Path to an image in the /public folder, written from the root.
+  // e.g. a file at public/ecotrack.png is referenced as "/ecotrack.png".
+  src: string;
+  // Short description of what the screenshot shows (used as the caption
+  // and for accessibility). Keep it to a few words.
+  alt: string;
+}
+
 export interface Project {
   // URL-safe id. Becomes /projects/<slug>. Lowercase, hyphens, no spaces.
   slug: string;
@@ -29,6 +38,10 @@ export interface Project {
 
   // Technologies / tools used. Shown as monospace tags.
   stack: string[];
+
+  // Screenshots shown on the project's own page. Leave the array out entirely
+  // (or empty) for projects with no images yet — the page handles that fine.
+  images?: ProjectImage[];
 
   // Outbound links for this project (repo, live demo, write-up, etc.).
   links?: ProjectLink[];
@@ -65,12 +78,18 @@ export const projects: Project[] = [
     blurb:
       "A carbon-footprint tracker that turns everyday choices into CO₂e estimates, so making sustainable decisions doesn't require a research project.",
     stack: ["React", "JavaScript", "Python", "Flask", "HTML", "CSS"],
+    images: [
+      { src: "/ecotrack-calculator.png", alt: "EcoTrack carbon footprint calculator" },
+      { src: "/ecotrack-comparison.png", alt: "Weekly comparison and dashboard summary" },
+      { src: "/ecotrack-leaderboard.png", alt: "Friends leaderboard and activity feed" },
+    ],
     links: [
       { label: "Source", href: "https://github.com/andesc2007/apsc103" },
     ],
     body: [
       "Built at Queen's University for APSC 103, EcoTrack started from a problem a lot of students share: wanting to make more sustainable choices, but not having a simple way to understand the environmental impact of everyday actions.",
       "So we built a web tool that lets users estimate and monitor their carbon emissions across categories like product purchases, transportation, and household energy use. You enter an activity, get an estimated CO₂e value, and watch your cumulative impact build up through an interactive dashboard — plus lower-carbon recommendations to help you make more informed decisions.",
+      "To make it stick, we added a social layer: a friends leaderboard, week-over-week comparisons, and an activity feed that surfaces who's cut their footprint the most. Turning a solo tracker into something a little competitive was meant to make sustainable habits easier to keep.",
       "The prototype came together with a React front end talking to a Python and Flask backend that handled the emissions estimates. Wiring the two halves together — getting the front end and the API to agree on how data flowed — was where most of the real learning happened, and where an idea on paper became something that actually ran.",
     ],
   },

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import type { Project } from "@/config/projects";
 
@@ -9,19 +10,23 @@ interface ProjectEntryProps {
 
 // One row in the project log. The whole row links to the project's page.
 // The left "spine" number + monospace metadata is the field-notes signature.
+// If the project has images, the first one shows as a thumbnail on the right
+// (hidden on small screens to keep the log clean on phones).
 export function ProjectEntry({ project, number }: ProjectEntryProps) {
+  const thumbnail = project.images?.[0];
+
   return (
     <Link
       href={`/projects/${project.slug}`}
       className="group block border-t border-border py-8 transition-colors first:border-t-0 hover:bg-muted/40"
     >
-      <div className="grid grid-cols-[auto_1fr] gap-x-5 sm:grid-cols-[3rem_1fr]">
+      <div className="grid grid-cols-[auto_1fr] gap-x-5 sm:grid-cols-[3rem_1fr_auto] sm:gap-x-6">
         {/* Spine: the entry number. */}
         <div className="font-mono text-sm text-muted-foreground tabular-nums">
           {number}
         </div>
 
-        <div>
+        <div className="min-w-0">
           <div className="flex items-baseline justify-between gap-4">
             <h3 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
               {project.title}
@@ -58,6 +63,19 @@ export function ProjectEntry({ project, number }: ProjectEntryProps) {
             </ul>
           </div>
         </div>
+
+        {/* Thumbnail: only when the project has an image, and only on ≥sm. */}
+        {thumbnail && (
+          <div className="hidden self-center overflow-hidden rounded-md border border-border bg-card sm:block">
+            <Image
+              src={thumbnail.src}
+              alt={thumbnail.alt}
+              width={176}
+              height={112}
+              className="h-[6.5rem] w-44 object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          </div>
+        )}
       </div>
     </Link>
   );
