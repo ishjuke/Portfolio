@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
@@ -34,6 +35,8 @@ export default async function ProjectPage({
   const project = getProject(slug);
 
   if (!project) notFound();
+
+  const images = project.images ?? [];
 
   return (
     <article className="mx-auto max-w-prose px-6 py-16 sm:py-20">
@@ -92,6 +95,29 @@ export default async function ProjectPage({
           </div>
         )}
       </header>
+
+      {/* Screenshots — first is the lead image, the rest stack below.
+          Skipped entirely for projects with no images. */}
+      {images.length > 0 && (
+        <div className="mt-12 flex flex-col gap-4">
+          {images.map((image) => (
+            <figure key={image.src} className="flex flex-col gap-2">
+              <div className="overflow-hidden rounded-lg border border-border bg-card">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={1280}
+                  height={800}
+                  className="h-auto w-full"
+                  // The lead image is likely above the fold; load it eagerly.
+                  priority={image === images[0]}
+                />
+              </div>
+              <figcaption className="eyebrow">{image.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
 
       {/* Body */}
       <div className="mt-12 flex flex-col gap-5 text-[1.05rem] leading-relaxed">
