@@ -19,7 +19,7 @@ export interface ProjectLink {
 
 export interface ProjectImage {
   // Path to an image in the /public folder, written from the root.
-  // e.g. a file at public/ecotrack.png is referenced as "/ecotrack.png".
+  // e.g. a file at public/ecotrack.jpeg is referenced as "/ecotrack.jpeg".
   src: string;
   // Short description of what the screenshot shows (used as the caption
   // and for accessibility). Keep it to a few words.
@@ -79,9 +79,9 @@ export const projects: Project[] = [
       "A carbon-footprint tracker that turns everyday choices into CO₂e estimates, so making sustainable decisions doesn't require a research project.",
     stack: ["React", "JavaScript", "Python", "Flask", "HTML", "CSS"],
     images: [
-      { src: "/ecotrack-calculator.png", alt: "EcoTrack carbon footprint calculator" },
-      { src: "/ecotrack-comparison.png", alt: "Weekly comparison and dashboard summary" },
-      { src: "/ecotrack-leaderboard.png", alt: "Friends leaderboard and activity feed" },
+      { src: "/ecotrack-calculator.jpeg", alt: "EcoTrack carbon footprint calculator" },
+      { src: "/ecotrack-comparison.jpeg", alt: "Weekly comparison and dashboard summary" },
+      { src: "/ecotrack-leaderboard.jpeg", alt: "Friends leaderboard and activity feed" },
     ],
     links: [
       { label: "Source", href: "https://github.com/andesc2007/apsc103" },
@@ -99,15 +99,16 @@ export const projects: Project[] = [
     year: "2025",
     status: "shipped",
     blurb:
-      "A hackathon build with a team — an AI productivity tool that helps people carve focus out of overloaded schedules.",
-    stack: ["TypeScript"],
+      "A hackathon build with a team — an AI-assisted day planner that helps people carve focus out of overloaded schedules.",
+    stack: ["Next.js", "TypeScript", "Tailwind", "Supabase", "OpenAI"],
     links: [
+      { label: "Live", href: "https://a-itivity.vercel.app" },
       { label: "Source", href: "https://github.com/danii-ree/AItivity" },
     ],
     body: [
       "AItivity was built with a team during a hackathon, around a problem everyone in the room recognized: busy schedules make it hard to be productive, and generic to-do apps don't really help.",
-      "The idea was an AI-assisted productivity website that works with how people actually plan their days, rather than handing them another empty list to fill in.",
-      "Beyond the build itself, the project was a lesson in collaboration under a deadline — splitting the work across a team, merging everyone's pieces into one thing that ran, and shipping something real in the time we had. That pressure taught me as much as the code did.",
+      "It's a calendar-based day planner with its own user accounts, layering OpenAI on top so the app can actually help you shape a day rather than just handing you another empty list to fill in. The stack came together fast over a weekend: a Next.js and TypeScript front end, Supabase for auth and data, and the OpenAI API for the assistance.",
+      "I worked on the front end — building out the interface and the calendar views that everything else plugged into. Beyond the code, the project was a lesson in collaboration under a deadline: splitting the work across a team, merging everyone's pieces into one thing that ran, and shipping something real in the time we had. That pressure taught me as much as the building did.",
     ],
   },
 ];
