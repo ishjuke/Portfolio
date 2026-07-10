@@ -5,6 +5,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 // Internal nav links (rendered with Next's <Link>).
 const navItems = [
   { label: "Work", href: "/#work" },
+  { label: "Experience", href: "/experience" },
   { label: "Notes", href: "/notes" },
   { label: "Now", href: "/now" },
   { label: "About", href: "/#about" },
@@ -32,20 +33,19 @@ export function Nav() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  className="rounded-md px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:px-3"
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            {/* Resume — a static file in /public, opens in a new tab.
-                Drop your PDF at public/resume.pdf and this just works. */}
+            {/* Resume — a static file in /public, opens in a new tab. */}
             <li>
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="rounded-md px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:px-3"
               >
                 Resume
               </a>
