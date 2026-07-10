@@ -41,7 +41,7 @@ export const site = {
 
   // Used for SEO / Open Graph. Set this to your real Vercel URL once you've
   // picked the final name (e.g. https://ishjuke.vercel.app).
-  url: "https://ishjuke.vercel.app",
+  url: "https://ishanbijukuchhay.com",
 } as const;
 
 export type SiteConfig = typeof site;
