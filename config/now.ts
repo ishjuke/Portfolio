@@ -56,10 +56,15 @@ export const sections: NowSection[] = [
     heading: "Reading",
     layout: "covers",
     items: [
-      { label: "Fahrenheit 451", detail: "Ray Bradbury" },
+      {
+        label: "Fahrenheit 451",
+        detail: "Ray Bradbury",
+        image: "/fahrenheit_451.jpg",
+      },
       {
         label: "Friends, Lovers, and the Big Terrible Thing",
         detail: "Matthew Perry",
+        image: "/friends_book.jpg",
       },
     ],
   },
@@ -67,27 +72,30 @@ export const sections: NowSection[] = [
     heading: "Playing",
     layout: "covers",
     items: [
-      { label: "Minecraft" },
-      { label: "Cyberpunk 2077" },
-      { label: "Animal Crossing" },
+      { label: "Minecraft", image: "/minecraft.jpg" },
+      { label: "Cyberpunk 2077", image: "/cyberpunk-2077.jpg" },
+      { label: "Animal Crossing", image: "/animal_crossing.jpg" },
     ],
   },
   {
     heading: "Watching",
     layout: "covers",
-    items: [{ label: "Friends" }, { label: "The Office" }],
+    items: [
+      { label: "Friends", image: "/friends_cast.jpg" },
+      { label: "The Office", image: "/the_office.jpg" },
+    ],
   },
   {
     heading: "Listening to",
     layout: "covers",
     items: [
-      { label: "Pink Floyd" },
-      { label: "Oasis" },
-      { label: "Lord Huron" },
-      { label: "Tame Impala" },
+      { label: "Pink Floyd", image: "/pink_floyd.jpg" },
+      { label: "Oasis", image: "/oasis.jpg" },
+      { label: "Lord Huron", image: "/lord_huron.jpg" },
+      { label: "Tame Impala", image: "/tame_impala.jpg" },
     ],
   },
 ];
 
 // A single highlighted line for what you're currently after.
-export const lookingFor = "A Summer 2027 software engineering internship.";
+export const lookingFor = "A Summer 2027 hardware/firmware engineering internship.";
