@@ -29,6 +29,46 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "what-counts-as-experience",
+    title: "What counts as experience",
+    date: "2026-07-11",
+    summary:
+      "I almost left my best experiences off my portfolio because they weren't 'engineering enough.' I was wrong.",
+    content: `
+When I sat down to add an experience section to this site, my first instinct was to cut most of it. A robotics club, sure — that's engineering. But a lifeguard job? Running a club's Instagram? Tutoring? Those didn't feel like they belonged on a *portfolio*.
+
+I was wrong, and figuring out why was the actual lesson.
+
+## The stuff I almost cut
+
+Here's what I nearly left off: lifeguarding, tutoring math and physics, managing social media for a school club, and — this is the embarrassing one — a scholarship I'd been thinking of as "just financial aid."
+
+That scholarship, the Science '59 Admission Award, was awarded for academic excellence, *leadership*, and community involvement. I'd been quietly filing my single most competitive credential under "money stuff" instead of recognizing it for what it was.
+
+And it mattered more because of where I started. I didn't come from wealth — no inheritance, no safety net. For students like me, an award like this isn't a nice-to-have; it's part of what makes the door open at all. Undervaluing it said something about how I saw myself, and correcting that was its own kind of growth.
+
+The pattern was the same across the rest. Tutoring isn't "not engineering" — it's proof I can explain hard technical things to someone who's stuck, which is half of what engineers actually do. Lifeguarding isn't filler — it's holding real responsibility for people's safety through long, boring shifts where staying alert is the whole job. Running a club's socials is turning an announcement into people actually showing up.
+
+None of that is code. All of it is real.
+
+## The one I want to talk about
+
+There's one role on that page I care about more than the rest: I'm the Mental Health Steward for Computer Engineering at my school, and I hold it until I graduate.
+
+The job is simple to describe and easy to underrate. It's about making it normal to talk about how you're doing, and knowing where to point someone when they need more than a conversation. Most of it is just *mental health literacy* — knowing the signs, knowing the resources, and being a person who's safe to talk to.
+
+I think roles like this matter because the hard part of a bad week is rarely the week itself — it's that people don't reach out. Engineering programs are stressful in a way that quietly normalizes not being okay. Having someone whose actual job is to check in, and to make "how are you, really?" a normal question, changes that a little.
+
+So here's the least technical thing I'll ever put on a coding blog: check in on your people. The friend who went quiet, the one who's "just busy," the one grinding a little too hard. It costs you a text. You don't need a title to do it — I just happen to have one.
+
+## The takeaway
+
+A portfolio isn't only a list of things you built. It's evidence of who you are — how you lead, how you show up, what you've been trusted with. The projects prove I can build. The experience proves the rest.
+
+Don't undersell the parts of yourself that aren't code. They might be the most important things on the page.
+`.trim(),
+  },
+  {
     slug: "building-this-site",
     title: "What building this site actually taught me",
     date: "2026-07-09",
