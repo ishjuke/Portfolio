@@ -1,4 +1,4 @@
-=// ─────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────────
 // PROJECTS — the heart of the portfolio.
 //
 // Each project is one object in the `projects` array below. The homepage maps
