@@ -105,4 +105,4 @@ export const sections: NowSection[] = [
 ];
 
 // A single highlighted line for what you're currently after.
-export const lookingFor = "A Summer 2027 software engineering internship.";
+export const lookingFor = "A Summer 2027 hardware/firmware engineering internship.";
