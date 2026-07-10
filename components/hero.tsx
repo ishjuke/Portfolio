@@ -15,7 +15,13 @@ export function Hero() {
           {site.name}
         </h1>
 
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+        {/* Identity line — who and what, at a glance. */}
+        <p className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg">
+          Computer Engineering @ Queen&apos;s · hardware, firmware, and the
+          software around them
+        </p>
+
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-foreground/80">
           {site.tagline}
         </p>
 
