@@ -22,7 +22,10 @@ export const site = {
     "I'm Ishan — a student who builds things to understand how they work. " +
     "Some of these started at hackathons, others as coursework I pushed past " +
     "the assignment, but they all began with a real problem worth solving. " +
-    "Each one taught me something I couldn't have picked up from a tutorial.",
+    "Each one taught me something I couldn't have picked up from a tutorial. " +
+    "When I'm not building, I'm usually working out at the gym, immersing " +
+    "myself in a book or a game, listening to music, or out exploring " +
+    "somewhere new.",
 
   // The email your contact form sends TO. Also shown as a mailto fallback.
   email: "ishanbijukuchhay@gmail.com",
