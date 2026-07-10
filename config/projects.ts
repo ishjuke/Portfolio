@@ -1,4 +1,4 @@
-// ─────────────────────────────────────────────────────────────────────────────
+=// ─────────────────────────────────────────────────────────────────────────────
 // PROJECTS — the heart of the portfolio.
 //
 // Each project is one object in the `projects` array below. The homepage maps
@@ -109,6 +109,34 @@ export const projects: Project[] = [
       "AItivity was built with a team during a hackathon, around a problem everyone in the room recognized: busy schedules make it hard to be productive, and generic to-do apps don't really help.",
       "It's a calendar-based day planner with its own user accounts, layering OpenAI on top so the app can actually help you shape a day rather than just handing you another empty list to fill in. The stack came together fast over a weekend: a Next.js and TypeScript front end, Supabase for auth and data, and the OpenAI API for the assistance.",
       "I worked on the front end — building out the interface and the calendar views that everything else plugged into. Beyond the code, the project was a lesson in collaboration under a deadline: splitting the work across a team, merging everyone's pieces into one thing that ran, and shipping something real in the time we had. That pressure taught me as much as the building did.",
+    ],
+  },
+  {
+    slug: "maze-robot",
+    title: "Light-Following Maze Robot",
+    year: "2024",
+    status: "shipped",
+    blurb:
+      "A class-project robot that reads light with photoresistors and steers itself through a guided maze.",
+    stack: ["Arduino", "Microcontroller", "Photoresistors", "Soldering"],
+    body: [
+      "A class project built around a simple idea: give a robot eyes made of light. Using a microcontroller and photoresistors, it senses differences in light and reacts to them, following a guided path through a maze rather than being told where to go.",
+      "This was hands-on embedded work — wiring and soldering the sensors, reading their analog values, and translating \"it's brighter over there\" into motor commands that actually kept the robot on track. Tuning the thresholds so it reacted reliably instead of twitching at every shadow was the real challenge, and where I learned how forgiving software has to be when the input comes from the messy physical world.",
+      "I wrote a full report on this one at the time — I'm digging it up to link here, along with photos of the build.",
+    ],
+  },
+  {
+    slug: "battle-robot",
+    title: "Battle Robot",
+    year: "2024",
+    status: "shipped",
+    blurb:
+      "An Arduino-driven combat robot built from second-hand parts and woodworking — took 2nd place, and led to me running the robotics club.",
+    stack: ["Arduino", "Electronics", "Woodworking"],
+    body: [
+      "In grade 11, I built a battle robot for an in-school robotics competition out of an Arduino, second-hand materials, and a fair amount of woodworking. Working within those constraints — making salvaged parts and scrap into something that could actually take a hit and keep moving — was most of the fun and most of the learning.",
+      "It placed 2nd in the competition, which I'm still proud of given what it was made from. More importantly, it's what pulled me deeper into the club: the next year, in grade 12, I became its General Manager.",
+      "This was the project that hooked me on building physical things — the moment where electronics, code, and a pile of materials became a machine that did something. Photos of the build are coming once I dig them out of my archives.",
     ],
   },
 ];
