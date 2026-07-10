@@ -23,6 +23,9 @@ export interface NowSection {
   // "list"   → simple text list (for focus areas, no covers)
   // "covers" → grid of cover cards (for books, games, shows, music)
   layout: "list" | "covers";
+  // For "covers" sections: the shape of each card's image frame.
+  // "portrait" (default) suits books/shows; "square" suits album art.
+  frame?: "portrait" | "square";
   items: NowItem[];
 }
 
@@ -55,6 +58,7 @@ export const sections: NowSection[] = [
   {
     heading: "Reading",
     layout: "covers",
+    frame: "portrait",
     items: [
       {
         label: "Fahrenheit 451",
@@ -71,6 +75,7 @@ export const sections: NowSection[] = [
   {
     heading: "Playing",
     layout: "covers",
+    frame: "portrait",
     items: [
       { label: "Minecraft", image: "/minecraft.jpg" },
       { label: "Cyberpunk 2077", image: "/cyberpunk-2077.jpg" },
@@ -80,6 +85,7 @@ export const sections: NowSection[] = [
   {
     heading: "Watching",
     layout: "covers",
+    frame: "portrait",
     items: [
       { label: "Friends", image: "/friends_cast.jpg" },
       { label: "The Office", image: "/the_office.jpg" },
@@ -88,6 +94,7 @@ export const sections: NowSection[] = [
   {
     heading: "Listening to",
     layout: "covers",
+    frame: "square",
     items: [
       { label: "Pink Floyd", image: "/pink_floyd.jpg" },
       { label: "Oasis", image: "/oasis.jpg" },
@@ -98,4 +105,4 @@ export const sections: NowSection[] = [
 ];
 
 // A single highlighted line for what you're currently after.
-export const lookingFor = "A Summer 2027 hardware/firmware engineering internship.";
+export const lookingFor = "A Summer 2027 software engineering internship.";

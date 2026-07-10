@@ -42,6 +42,10 @@ export default function NowPage() {
 }
 
 function SectionBlock({ section }: { section: NowSection }) {
+  // Album art is square; books/shows are portrait (the default).
+  const aspectClass =
+    section.frame === "square" ? "aspect-square" : "aspect-[3/4]";
+
   return (
     <div>
       <h2 className="font-display text-xl font-semibold tracking-tight">
@@ -67,18 +71,22 @@ function SectionBlock({ section }: { section: NowSection }) {
               className="flex flex-col gap-2 overflow-hidden"
             >
               {item.image ? (
-                <div className="overflow-hidden rounded-md border border-border bg-card">
+                <div
+                  className={`${aspectClass} overflow-hidden rounded-md border border-border bg-card`}
+                >
                   <Image
                     src={item.image}
                     alt={item.label}
-                    width={300}
-                    height={450}
-                    className="h-auto w-full object-cover"
+                    width={400}
+                    height={400}
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
                 // No cover yet → clean text tile, not a broken image box.
-                <div className="flex aspect-[3/4] items-center justify-center rounded-md border border-border bg-muted p-3 text-center">
+                <div
+                  className={`${aspectClass} flex items-center justify-center rounded-md border border-border bg-muted p-3 text-center`}
+                >
                   <span className="font-display text-sm font-medium leading-snug">
                     {item.label}
                   </span>
