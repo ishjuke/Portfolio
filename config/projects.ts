@@ -165,6 +165,7 @@ export const projects: Project[] = [
       "Two 555-based circuits I designed and built on breadboard — a blinking LED and a light-reactive screaming siren — documented in a full technical report.",
     stack: ["555 Timer", "Breadboarding", "Analog Electronics", "Tinkercad"],
     links: [
+      { label: "Report (PDF)", href: "/555-timer-report.pdf" },
       { label: "Blinking LED demo", href: "https://youtube.com/shorts/61e0ZH50hLk?feature=share" },
       { label: "Siren demo", href: "https://youtu.be/BN8TTKlZRMk" },
     ],
