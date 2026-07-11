@@ -6,8 +6,6 @@ import { Footer } from "@/components/footer";
 import { site } from "@/config/site";
 import "./globals.css";
 
-// Three roles: display (Space Grotesk), body/UI (Inter), mono labels (JetBrains).
-// Each exposes a CSS variable that tailwind.config.ts maps to a font family.
 const display = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
@@ -83,3 +81,32 @@ export const metadata: Metadata = {
     },
   },
 };
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+    >
+      <body className="font-sans">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className="flex min-h-dvh flex-col">
+            <Nav />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
