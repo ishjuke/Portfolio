@@ -29,49 +29,57 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Projects`,
+    default: `${site.name} — Computer Engineer`,
     template: `%s — ${site.name}`,
   },
-  description: site.tagline,
+  description:
+    "Ishan Bijukuchhay is a Computer Engineering student at Queen's University focused on hardware, firmware, and the software around them — building projects across embedded systems, robotics, and the web.",
+  keywords: [
+    "Ishan Bijukuchhay",
+    "Computer Engineering",
+    "Queen's University",
+    "Firmware",
+    "Embedded Systems",
+    "Hardware",
+    "Robotics",
+    "C Programming",
+    "Raspberry Pi",
+    "Microcontrollers",
+    "Arduino",
+    "Low-Level Programming",
+    "Systems Programming",
+    "Software Engineer",
+    "Portfolio",
+    "Smith Engineering",
+  ],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  alternates: {
+    canonical: site.url,
+  },
   openGraph: {
-    title: `${site.name} — Projects`,
-    description: site.tagline,
+    title: `${site.name} — Computer Engineer`,
+    description:
+      "Computer Engineering @ Queen's · hardware, firmware, and the software around them. A log of what I've built and what it taught me.",
     url: site.url,
     siteName: site.name,
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Projects`,
-    description: site.tagline,
+    title: `${site.name} — Computer Engineer`,
+    description:
+      "Computer Engineering @ Queen's · hardware, firmware, and the software around them.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
-    >
-      <body className="font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex min-h-dvh flex-col">
-            <Nav />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
-}
