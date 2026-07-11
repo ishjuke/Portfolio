@@ -29,6 +29,34 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "making-it-look-legit",
+    title: "The unglamorous part",
+    date: "2026-07-11",
+    summary:
+      "A custom domain, link previews, and SEO — the invisible work that makes a site feel real.",
+    content: `
+Most of the work that makes a site feel legit is invisible. This week I did the boring, important layer: a real domain, link previews, and search metadata. None of it changes how the site *looks* — but all of it changes how it lands.
+
+## What I actually did
+
+**A custom domain.** The site now lives at its own address instead of a random \`.vercel.app\` URL. Ten dollars a year, and it reads a whole tier more professional on a resume or a recruiter DM.
+
+**Link previews.** Paste the link into Discord or LinkedIn now and a proper card shows up — my name, what I do, my site's look. It's generated from code, so it always matches the rest of the site. Before, a shared link looked broken. Now it looks intentional.
+
+**SEO metadata.** A real description, keywords, and the tags that let Google actually index the page. When someone searches my name, I want the right thing to come up.
+
+## The catch
+
+None of it was hard, exactly — but it was fiddly, and I broke the build twice getting there. Once from a re-export the framework didn't allow, once from accidentally deleting a chunk of a file I was only meant to edit.
+
+Both times, the same move fixed it fast: read the error, it names the file and line, fix that one thing.
+
+## The takeaway
+
+This layer is easy to skip because you can't see it. But it's the difference between a link that looks like a real person's site and one that looks like a school project. Worth the boring afternoon.
+`.trim(),
+  },
+  {
     slug: "what-counts-as-experience",
     title: "What counts as experience",
     date: "2026-07-11",
