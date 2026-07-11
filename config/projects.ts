@@ -139,6 +139,41 @@ export const projects: Project[] = [
       "This was the project that hooked me on building physical things — the moment where electronics, code, and a pile of materials became a machine that did something. Photos of the build are coming once I dig them out of my archives.",
     ],
   },
+  {
+    slug: "led-display",
+    title: "LED Light-Show Display",
+    year: "2022",
+    status: "shipped",
+    blurb:
+      "A microcontroller-driven LED display I designed in Proteus, built on a PCB, and programmed with an Arduino to run light-show patterns.",
+    stack: ["Proteus", "PCB Design", "Arduino", "ATmega", "Electronics"],
+    links: [
+      { label: "Schematic", href: "/led-display-schematic.png" },
+    ],
+    body: [
+      "One of my first end-to-end hardware builds: an ATmega-based LED display driving 17 individually-controlled LEDs, designed to run light-show patterns.",
+      "I started in Proteus — laying out the microcontroller, a 16 MHz crystal, the USB-to-TTL programming header, the reset circuit, and 17 current-limited LEDs (220Ω each) — then took the design off the screen and built it on a PCB. Later I programmed it with an Arduino to actually drive the patterns.",
+      "It was the first time I took something all the way from schematic to physical board to running code, and it's a big part of why I ended up in Computer Engineering. The design earned full marks.",
+    ],
+  },
+  {
+    slug: "555-timer-circuits",
+    title: "555 Timer Circuits",
+    year: "2023",
+    status: "shipped",
+    blurb:
+      "Two 555-based circuits I designed and built on breadboard — a blinking LED and a light-reactive screaming siren — documented in a full technical report.",
+    stack: ["555 Timer", "Breadboarding", "Analog Electronics", "Tinkercad"],
+    links: [
+      { label: "Blinking LED demo", href: "https://youtube.com/shorts/61e0ZH50hLk?feature=share" },
+      { label: "Siren demo", href: "https://youtu.be/BN8TTKlZRMk" },
+    ],
+    body: [
+      "For a technical electronics course, I designed and built two circuits around the 555 timer IC, then wrote them up in a full report — schematics, component lists, a pin-by-pin breakdown of the 555, build photos, and demo videos.",
+      "The first was a blinking LED using the 555 in astable mode. The second was more fun: a \"screaming siren\" driving a piezo speaker through a photoresistor, so the sound changed with the light hitting it — brighter light, louder siren.",
+      "Getting from a working simulation to a circuit that actually ran on a physical breadboard — chasing down the small wiring mistakes that only show up in real hardware — was the real lesson. My teacher's note on the report: \"an excellent effort.\"",
+    ],
+  },
 ];
 
 // ── Helpers (you probably won't need to edit below this line) ────────────────
