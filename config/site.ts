@@ -18,8 +18,9 @@ export const site = {
     "Learning by building — these are the projects that taught me something.",
 
   // A slightly longer intro for the About section. 2–4 sentences.
-  about:
-    "I'm Ishan — a student who builds things to understand how they work. " +
+about:
+    "I'm Ishan — a Computer Engineering student at Queen's and a Science '59 " +
+    "Award recipient, drawn to building things to understand how they work. " +
     "Some of these started at hackathons, others as coursework I pushed past " +
     "the assignment, but they all began with a real problem worth solving. " +
     "Each one taught me something I couldn't have picked up from a tutorial. " +
