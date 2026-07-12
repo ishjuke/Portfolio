@@ -29,6 +29,38 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "when-the-obvious-fix-is-wrong",
+    title: "When the obvious fix is wrong",
+    date: "2026-07-12",
+    summary:
+      "I measured my caching proxy instead of assuming. Threads made it slower. LFU collapsed. Both taught me more than the 29x number did.",
+    content: `
+Last post, my caching proxy worked and I had one number: ~29× more throughput on cache hits than origin fetches. Good headline. But the interesting part came after, when I started changing the design and *measuring* instead of assuming — and twice, the obvious improvement made things worse.
+
+## Threads made it slower (sometimes)
+
+The obvious next step for a single-threaded server is: add threads. So I gave each connection its own thread and benchmarked it.
+
+It was a tradeoff, not a win. For cache **hits** — which are CPU-cheap, just an in-memory lookup — threads were *slower*: the overhead of spinning one up dominates the tiny amount of actual work. For cache **misses** — which sit around waiting on the origin — threads were ~35% faster, because those waits now happen in parallel instead of one at a time.
+
+So "add threads" isn't right or wrong; it depends on whether your work is CPU-bound or I/O-bound. The real fix is a thread *pool* — reuse a fixed set of threads so you get the parallelism without paying the creation cost every time. I wouldn't have known which way it cut without measuring both.
+
+## LFU looked smarter and collapsed
+
+My cache evicts with LRU — drop the least *recently* used entry. LFU — drop the least *frequently* used — sounds smarter: keep what's popular, not just what's recent.
+
+Under a workload where popularity drifts over time, LFU's hit rate collapsed to ~9.5%. LRU held ~75%.
+
+The reason is the mechanism: LFU counts frequency, and old counts become permanent baggage. Something that was hot early builds a high count and refuses to leave, even after nobody wants it anymore — so it squats in the cache while genuinely useful new entries get evicted. LRU has no memory of the past beyond "was this touched recently," which turns out to be exactly the right kind of forgetting.
+
+## The actual lesson
+
+Neither of these is in the code — they're in the *measuring*. The 29× number showed the proxy works. These two showed me something more useful: the intuitive choice is often wrong, and the only way to know is to build it, break it, and understand *why* it broke.
+
+That's the part I actually care about. Next up: the thread pool.
+`.trim(),
+  },
+  {
     slug: "a-proxy-on-real-hardware",
     title: "A proxy on real hardware",
     date: "2026-07-11",

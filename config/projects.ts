@@ -59,16 +59,16 @@ export const projects: Project[] = [
     year: "2026",
     status: "shipped",
     blurb:
-      "A caching reverse proxy in C on a Raspberry Pi 5 — measured ~29× higher throughput on cache hits (46k req/s) versus origin fetches (1.6k req/s) under concurrent load.",
-    stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache"],
+      "A caching reverse proxy in C on a Raspberry Pi 5 — measured ~29× higher throughput on cache hits (46k req/s), then went deeper: concurrency tradeoffs, eviction-policy failure cases, and hardening.",
+    stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache", "Benchmarking"],
     links: [
       { label: "Source", href: "https://github.com/ishjuke/caching-proxy" },
     ],
     body: [
-      "I wanted to understand what actually happens between a browser and a server — the layer that CDNs and reverse proxies quietly handle — so I built one from scratch in C: an HTTP caching proxy that sits in front of an origin server, caches responses in memory, and serves repeat requests itself. The core is a hash table with LRU eviction, a socket server, and origin forwarding, running on a Raspberry Pi 5.",
-      "The whole point was to measure it, not just build it. Under 50 concurrent connections, cache hits served ~46,200 requests/sec versus ~1,600 for origin fetches — roughly a 29× throughput improvement from caching.",
-      "The reason the gap is that large is the interesting part: a cache hit is a pure in-memory hash lookup, while a miss pays for a full round trip — open a socket to the origin, resolve it, send the request, wait for the response, cache it, relay it. The miss path is bottlenecked by the origin and the network, not by the cache — which is exactly why CDNs exist. The latency tail on hits also exposes my single-threaded design under load, which is the honest next thing to improve.",
-      "Working this close to the metal in C — managing sockets, parsing HTTP by hand, deciding what's safe to cache, and then benchmarking the whole thing on real hardware — taught me the things the higher-level tools usually hide.",
+      "I wanted to understand the layer between a browser and a server that CDNs and reverse proxies quietly handle, so I built one from scratch in C: an HTTP caching proxy that sits in front of an origin, caches responses in memory, and serves repeat requests itself. The core is a hash table with separate chaining (O(1) lookup) and LRU eviction via a doubly-linked recency list (O(1) evict), on a single-threaded socket server, running on a Raspberry Pi 5.",
+      "The point was never just to build it — it was to measure it and find where the obvious choices break. Under 50 concurrent connections, cache hits served ~46,200 requests/sec versus ~1,600 for origin fetches: roughly a 29× throughput improvement. A hit is a pure in-memory hash lookup; a miss pays for a full round trip to the origin. The miss path is bottlenecked by the origin and the network, not the cache — which is exactly why CDNs exist.",
+      "Then I pushed on the design and measured the results instead of assuming them. Adding a thread per connection turned out to be a tradeoff, not a win: it was worse for CPU-cheap cache hits (thread overhead dominates) but ~35% faster for I/O-bound misses (origin waits happen in parallel) — which points at a thread pool as the real fix. Swapping LRU for LFU was worse still under drifting popularity: LFU's hit rate collapsed to ~9.5% versus LRU's ~75%, because old frequency counts become permanent baggage that keeps stale entries resident.",
+      "On top of the performance work, I hardened it: allocation-failure safety, socket timeouts, and truncation-safe caching to avoid caching partial responses (a cache-poisoning risk). Working this close to the metal in C — and benchmarking every change on real hardware rather than guessing — taught me the systems-performance reasoning the higher-level tools usually hide.",
     ],
   },
   {
