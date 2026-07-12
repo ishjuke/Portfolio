@@ -53,21 +53,22 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  {
+{
     slug: "caching-proxy",
     title: "HTTP Caching Proxy",
     year: "2026",
-    status: "in progress",
+    status: "shipped",
     blurb:
-      "A mini CDN built in C — a caching reverse proxy I'm running on a Raspberry Pi 5 to see how much real throughput a cache actually buys you.",
-    stack: ["C", "HTTP", "Raspberry Pi", "Sockets"],
+      "A caching reverse proxy in C on a Raspberry Pi 5 — measured ~29× higher throughput on cache hits (46k req/s) versus origin fetches (1.6k req/s) under concurrent load.",
+    stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache"],
     links: [
       { label: "Source", href: "https://github.com/ishjuke/caching-proxy" },
     ],
     body: [
-      "I wanted to understand what actually happens between a browser and a server — the layer that CDNs and reverse proxies quietly handle — so I'm building one from scratch in C: an HTTP caching proxy that sits in front of an origin server, caches responses, and serves repeat requests itself.",
-      "The interesting question isn't just whether it works, but how much it helps. I'm running it on a Raspberry Pi 5 and measuring throughput with and without the cache, so the payoff is a real number on real hardware rather than a hand-wave about caching being 'faster.'",
-      "Working this close to the metal in C — managing sockets, parsing HTTP by hand, deciding what's safe to cache and for how long — is teaching me the things the higher-level tools usually hide.",
+      "I wanted to understand what actually happens between a browser and a server — the layer that CDNs and reverse proxies quietly handle — so I built one from scratch in C: an HTTP caching proxy that sits in front of an origin server, caches responses in memory, and serves repeat requests itself. The core is a hash table with LRU eviction, a socket server, and origin forwarding, running on a Raspberry Pi 5.",
+      "The whole point was to measure it, not just build it. Under 50 concurrent connections, cache hits served ~46,200 requests/sec versus ~1,600 for origin fetches — roughly a 29× throughput improvement from caching.",
+      "The reason the gap is that large is the interesting part: a cache hit is a pure in-memory hash lookup, while a miss pays for a full round trip — open a socket to the origin, resolve it, send the request, wait for the response, cache it, relay it. The miss path is bottlenecked by the origin and the network, not by the cache — which is exactly why CDNs exist. The latency tail on hits also exposes my single-threaded design under load, which is the honest next thing to improve.",
+      "Working this close to the metal in C — managing sockets, parsing HTTP by hand, deciding what's safe to cache, and then benchmarking the whole thing on real hardware — taught me the things the higher-level tools usually hide.",
     ],
   },
   {
