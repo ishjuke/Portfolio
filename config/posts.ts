@@ -29,6 +29,45 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "a-proxy-on-real-hardware",
+    title: "A proxy on real hardware",
+    date: "2026-07-11",
+    summary:
+      "In one session I took a caching reverse proxy from a sealed Raspberry Pi box to forwarding live traffic in C. Next up: the numbers.",
+    content: `
+My Raspberry Pi 5 arrived today. By the end of the session, it was running a caching reverse proxy I wrote in C — forwarding and caching live traffic on real hardware.
+
+## What I pulled off, start to finish
+
+- Set up a headless Pi 5 from a sealed box — including debugging a boot failure and some network-discovery pain
+- Built the complete core of a caching reverse proxy in C: a hash table, LRU eviction, a socket server, and origin forwarding
+- Got it actually forwarding and caching live traffic on the hardware
+- Set up a proper remote dev workflow and version-controlled everything to GitHub
+
+Going from a sealed box to a working networked system in C, on real hardware, in a day felt good.
+
+## The honest part: no numbers yet
+
+Here's the thing I could fudge but won't — I don't have metrics yet. I have a system that *works*, not one I've *measured*. And those are two very different sentences.
+
+What I can say today:
+
+> "I built a caching reverse proxy in C — hash table with LRU eviction, socket server, origin forwarding — running on a Raspberry Pi 5."
+
+That's already real. It shows I can build a networked system in C from scratch on actual hardware.
+
+What I'll be able to say after benchmarking:
+
+> "...and I measured it — cache hits served at X requests/sec versus Y for origin misses, roughly a Z× throughput improvement under concurrent load."
+
+That second sentence is the one that lands, because it's the difference between *building* something and *reasoning about how it performs*. Throughput, latency, hit rates — that's the actual language of the work I want to do.
+
+## Next
+
+Benchmarking. The fun part, where the proxy stops being "it works" and becomes "here's the number." That's the session that makes this whole thing quotable — and I'd rather show up with the number than the adjective.
+`.trim(),
+  },
+  {
     slug: "making-it-look-legit",
     title: "The unglamorous part",
     date: "2026-07-11",
@@ -59,7 +98,7 @@ This layer is easy to skip because you can't see it. But it's the difference bet
   {
     slug: "what-counts-as-experience",
     title: "What counts as experience",
-    date: "2026-07-11",
+    date: "2026-07-10",
     summary:
       "I almost left my best experiences off my portfolio because they weren't 'engineering enough.' I was wrong.",
     content: `
