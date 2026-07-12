@@ -61,6 +61,9 @@ export const projects: Project[] = [
     blurb:
       "A caching reverse proxy in C on a Raspberry Pi 5 — measured ~29× higher throughput on cache hits (46k req/s), then went deeper: concurrency tradeoffs, eviction-policy failure cases, and hardening.",
     stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache", "Benchmarking"],
+    images: [
+      { src: "/caching-proxy-benchmark.png", alt: "LRU vs LFU hit-rate comparison: LRU holds 75% under drifting popularity while LFU collapses to 9.5%" },
+    ],
     links: [
       { label: "Source", href: "https://github.com/ishjuke/caching-proxy" },
     ],
