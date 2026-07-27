@@ -29,6 +29,38 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "the-thread-pool-measured",
+    title: "The thread pool, measured",
+    date: "2026-07-27",
+    summary:
+      "Part 3: I built the fix I'd diagnosed, proved it worked, then swept worker counts and found the tuning curve. The lesson isn't 'more threads.'",
+    content: `
+This is the end of the arc. Part 1 built a caching proxy in C and measured ~29× more throughput on cache hits. Part 2 found that the *obvious* improvements were wrong — LFU collapsed the hit rate, and thread-per-connection was a tradeoff, not a win. Part 3 is today: I built the fix I'd diagnosed, proved it, and tuned it.
+
+## The fix: a thread pool
+
+Thread-per-connection failed because you pay to spawn a thread on *every* request — overhead that swamps a CPU-cheap cache hit. A thread pool fixes that: a fixed set of worker threads pull connections off a shared queue, so you get parallelism without the per-request creation cost.
+
+The interesting part is the concurrency correctness. The queue is guarded by a mutex and a condition variable, and there are a few traps I had to get right: wait in a \`while\` loop, not an \`if\` (spurious wakeups are real); do the \`close()\` *outside* the lock (never hold a mutex across I/O); and store the client FDs by value, not by pointer into a buffer that moves. Get one of those wrong and it works fine — until it deadlocks or corrupts under load.
+
+It worked. The pool beat thread-per-connection at every concurrency level, kept the miss-path parallelism (~47% over single-threaded), and overtook the single-threaded server once real concurrency (100+ connections) made the single accept loop the bottleneck.
+
+## The tuning curve
+
+The Pi has 4 cores, so the naive guess is "4 workers." I swept 4 → 64 and measured:
+
+Throughput *climbed past* 4 workers, kept climbing, peaked around **32**, then **collapsed at 64** — falling back to single-threaded numbers with 5× the timeouts.
+
+That shape is the whole lesson. It climbs past the core count because the work is I/O-bound: workers spend most of their time *blocked* waiting on the origin, not using CPU, so oversubscribing cores is correct — up to a point. Past the peak, scheduling overhead, lock contention, and origin saturation overwhelm the gains, and more threads actively hurt. Tail latency degrades well before throughput peaks, so the practical sweet spot (~16 workers) is below the raw-throughput peak.
+
+## What I actually learned
+
+The one-line version: **optimal concurrency for I/O-bound work exceeds the core count, but is bounded by the downstream bottleneck** — and past the peak, more threads make it worse.
+
+I could have read that in a textbook. Building it, measuring it, and watching my own proxy trace that exact curve on real hardware is the difference between knowing it and *knowing* it. That's the whole reason I did this project the long way.
+`.trim(),
+  },
+  {
     slug: "when-the-obvious-fix-is-wrong",
     title: "When the obvious fix is wrong",
     date: "2026-07-12",

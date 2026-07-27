@@ -59,20 +59,21 @@ export const projects: Project[] = [
     year: "2026",
     status: "shipped",
     blurb:
-      "A caching reverse proxy in C on a Raspberry Pi 5 — measured ~29× higher throughput on cache hits (46k req/s), then went deeper: concurrency tradeoffs, eviction-policy failure cases, and hardening.",
-    stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache", "Benchmarking"],
+      "A caching reverse proxy in C on a Raspberry Pi 5 — ~29× higher throughput on cache hits, then a full measure-diagnose-build-tune loop: concurrency tradeoffs, eviction-policy failures, a thread pool, and its tuning curve.",
+    stack: ["C", "HTTP", "Raspberry Pi", "Sockets", "LRU Cache", "Threads", "Benchmarking"],
     images: [
-      { src: "/caching-proxy-benchmark.png", alt: "LRU vs LFU hit-rate comparison: LRU holds 75% under drifting popularity while LFU collapses to 9.5%" },
-      { src: "/caching-proxy-throughput.png", alt: "wrk benchmark: cache hits ~46,000 req/s vs ~1,600 req/s for origin misses under 50 connections" },
+      { src: "/caching-proxy-benchmark.jpg", alt: "LRU vs LFU hit-rate comparison: LRU holds 75% under drifting popularity while LFU collapses to 9.5%" },
+      { src: "/caching-proxy-throughput.jpg", alt: "wrk benchmark: cache hits ~46,000 req/s vs ~1,600 req/s for origin misses under 50 connections" },
     ],
     links: [
       { label: "Source", href: "https://github.com/ishjuke/caching-proxy" },
     ],
     body: [
-      "I wanted to understand the layer between a browser and a server that CDNs and reverse proxies quietly handle, so I built one from scratch in C: an HTTP caching proxy that sits in front of an origin, caches responses in memory, and serves repeat requests itself. The core is a hash table with separate chaining (O(1) lookup) and LRU eviction via a doubly-linked recency list (O(1) evict), on a single-threaded socket server, running on a Raspberry Pi 5.",
-      "The point was never just to build it — it was to measure it and find where the obvious choices break. Under 50 concurrent connections, cache hits served ~46,200 requests/sec versus ~1,600 for origin fetches: roughly a 29× throughput improvement. A hit is a pure in-memory hash lookup; a miss pays for a full round trip to the origin. The miss path is bottlenecked by the origin and the network, not the cache — which is exactly why CDNs exist.",
-      "Then I pushed on the design and measured the results instead of assuming them. Adding a thread per connection turned out to be a tradeoff, not a win: it was worse for CPU-cheap cache hits (thread overhead dominates) but ~35% faster for I/O-bound misses (origin waits happen in parallel) — which points at a thread pool as the real fix. Swapping LRU for LFU was worse still under drifting popularity: LFU's hit rate collapsed to ~9.5% versus LRU's ~75%, because old frequency counts become permanent baggage that keeps stale entries resident.",
-      "On top of the performance work, I hardened it: allocation-failure safety, socket timeouts, and truncation-safe caching to avoid caching partial responses (a cache-poisoning risk). Working this close to the metal in C — and benchmarking every change on real hardware rather than guessing — taught me the systems-performance reasoning the higher-level tools usually hide.",
+      "I wanted to understand the layer between a browser and a server that CDNs and reverse proxies quietly handle, so I built one from scratch in C: an HTTP caching proxy that sits in front of an origin, caches responses in memory, and serves repeat requests itself. The core is a hash table with separate chaining (O(1) lookup) and LRU eviction via a doubly-linked recency list (O(1) evict), running on a Raspberry Pi 5.",
+      "The point was never just to build it — it was to run the full loop: measure, diagnose, build the fix, re-measure, tune. Under 50 concurrent connections, cache hits served ~46,200 requests/sec versus ~1,600 for origin fetches — roughly a 29× improvement, since a hit is a pure in-memory lookup while a miss pays a full round trip to the origin.",
+      "Then I stress-tested my own assumptions and measured the results instead of guessing them. Swapping LRU for LFU collapsed the hit rate under drifting popularity (~9.5% vs ~75%), because old frequency counts become permanent baggage that keeps stale entries resident. Adding a thread per connection was a tradeoff, not a win — worse for CPU-cheap hits (creation overhead dominates), better for I/O-bound misses (origin waits overlap) — which pointed at a thread pool as the real fix.",
+      "So I built the thread pool: a fixed set of workers pulling connections off a mutex- and condition-variable-guarded queue, parallelism without per-request thread creation. It beat thread-per-connection everywhere and overtook single-threaded under real concurrency. Then I swept worker counts and found the tuning curve — throughput climbs past the Pi's 4 cores, peaks around 32, and collapses at 64 as scheduling overhead and origin saturation take over. The practical sweet spot is ~16 workers. The lesson isn't 'more threads': optimal concurrency for I/O-bound work exceeds the core count but is bounded by the downstream bottleneck.",
+      "I also hardened it — allocation-failure safety, socket timeouts, truncation-safe caching against cache poisoning. Working this close to the metal in C, and benchmarking every change on real hardware rather than assuming, taught me the systems-performance reasoning the higher-level tools usually hide.",
     ],
   },
   {
