@@ -29,6 +29,40 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "fastest-is-the-wrong-question",
+    title: "\"Fastest\" is the wrong question",
+    date: "2026-08-01",
+    summary:
+      "Part 4: I built an epoll event loop like nginx uses, benchmarked all four architectures head-to-head, and found that the server with the highest throughput was also the worst one to actually run.",
+    content: `
+This is the last part of the proxy arc, and it's the one that changed how I think about performance. Parts 2 and 3 were about threading — thread-per-connection, then a thread pool. Part 4 asks: what if you stop mapping connections to threads at all?
+
+## The event loop
+
+That's what an epoll event loop does, and it's how nginx actually works. One thread, non-blocking sockets, and an event loop that reacts as each socket becomes ready. On a cache miss, the proxy opens a *second* non-blocking socket to the origin and drives both the client and origin connections through a single state machine — so no thread ever sits blocked waiting on I/O. One thread, no per-connection cost, no locks.
+
+I recompiled all four servers under identical conditions and benchmarked them head-to-head.
+
+## The result that reframed everything
+
+Here's what got me: **single-threaded had the highest raw throughput** at low concurrency — it beat even epoll. Zero threads, zero locks, zero event-loop bookkeeping, so at low load the simplest design just wins.
+
+And that number is a trap.
+
+Because single-threaded's throughput hides catastrophic tail latency. At 50 connections it showed ~22ms average — but a **1.7-second** worst case, and timeouts at every level past 10 connections. A few requests scream through while others starve to death, and the *average* quietly conceals it. If you'd picked your architecture off the throughput column alone, you'd have shipped the worst possible server.
+
+The thread pool and the event loop trade a little peak throughput for enormous stability: sub-millisecond average latency and single-digit-millisecond worst case at the same concurrency, versus single-threaded's 1.7 seconds. The pool had zero timeouts at every level. epoll gave the best overall balance — strong throughput, excellent latency, best miss-path performance — on one thread.
+
+## What I actually learned
+
+There is no single "fastest" architecture. It depends entirely on what you optimize for, and **raw throughput is a misleading metric**. The reason production servers use event loops isn't that they're fastest — it's that at scale, *predictable latency* matters more than peak throughput, and the event-driven model delivers it without a thread per connection.
+
+The whole lesson of this project, in one line: **"fastest" is the wrong question.** Tail latency and stability under load are what actually separate these designs — and you only see it when you stop staring at the headline number and look at what it's hiding.
+
+That's the end of the arc. Built it, broke my assumptions, and learned to distrust the number I started out chasing.
+`.trim(),
+  },
+  {
     slug: "the-thread-pool-measured",
     title: "The thread pool, measured",
     date: "2026-07-27",
