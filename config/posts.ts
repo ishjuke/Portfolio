@@ -29,6 +29,38 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "my-benchmarks-were-lying",
+    title: "My benchmarks were lying to me",
+    date: "2026-08-04",
+    summary:
+      "The hardest part of my caching proxy wasn't building it four ways. It was finding out my measurements were wrong — and using a queuing-theory law to prove it.",
+    content: `
+I'd built my caching proxy four different ways and benchmarked them all. Clean tables, a nice conclusion, done. Then an experienced reviewer looked at my setup and, politely, took it apart. The numbers were wrong — not by a little, and not because the code was broken. Because the *measurement* was.
+
+That correction taught me more than the whole build did.
+
+## Three things contaminating everything
+
+**The load generator was on the same box.** I was running \`wrk\` (the thing generating load), the proxy, and the origin server all on the same 4-core Raspberry Pi — so they were fighting each other for CPU. Every cross-architecture comparison was polluted by that contention. The fix: move \`wrk\` onto a separate laptop, wired to the Pi over Ethernet, and verify the link (1000-ping flood, 0% loss, ~0.3ms).
+
+**The origin was the real bottleneck.** My origin server was Python's built-in \`http.server\`, which is single-threaded and tops out around 1,500–2,400 req/s. So every cache-*miss* number I'd reported wasn't measuring my proxy at all — it was measuring how fast Python could serve. I swapped in nginx.
+
+**Connections closed after every request.** My server spoke HTTP/1.0-style: open, respond, close. Over a real network that means a full TCP handshake *per request*, which dominates the measurement. Adding HTTP/1.1 keep-alive dropped single-connection latency from ~1.8ms to ~400µs — the handshake had been most of what I was timing.
+
+## The law that caught it
+
+Here's the part I'm proudest of. How do you know your numbers are wrong without already knowing the right answer?
+
+**Little's Law.** It says, for a stable system, average concurrency = throughput × average latency. Rearranged: latency = concurrency / throughput. At 50 connections and 62,304 req/s, that predicts an average latency of 50/62304 ≈ **802µs**. My corrected measurement was **793µs** — they reconcile. My *original* numbers were off by 3–14×, and that mismatch was the tell: they described a system that couldn't physically exist. The law is what let me trust the second set of numbers and distrust the first.
+
+## What I actually took from it
+
+The lesson isn't a fact about caching. It's a habit: **don't trust a benchmark until you've proven it's physically consistent.** A number that looks clean can be measuring the wrong thing entirely — your load tool, your origin, your handshake overhead — and the only defense is controlling your variables and sanity-checking against something that has to be true.
+
+I'd rather ship the corrected, uglier, honest numbers than the clean wrong ones. That's the whole point of measuring at all.
+`.trim(),
+  },
+  {
     slug: "fastest-is-the-wrong-question",
     title: "\"Fastest\" is the wrong question",
     date: "2026-08-01",
