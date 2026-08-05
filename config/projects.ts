@@ -53,6 +53,24 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    slug: "stm32-drivers",
+    title: "Bare-Metal STM32 Driver Stack",
+    year: "2026",
+    status: "in progress",
+    blurb:
+      "A from-scratch driver stack for the STM32F401RE (Cortex-M4) in C — no HAL, no CubeMX, no vendor libraries. Every register write derived from the reference manual, every peripheral verified on a logic analyzer.",
+    stack: ["C", "ARM Cortex-M4", "STM32", "Bare-Metal", "GDB", "Logic Analyzer"],
+    links: [
+      { label: "Source", href: "https://github.com/ishjuke/stm32-drivers" },
+    ],
+    body: [
+      "A bare-metal driver stack for the STM32F401RE, written in C with no HAL, no CubeMX-generated code, and no vendor libraries — every register write derived directly from RM0368 and the F401xE datasheet. The point wasn't to make an LED blink. It was to build the layer underneath the layer most embedded projects start from — the linker script, the vector table, the C runtime — and then to prove each piece works rather than assume it does because the output looked right.",
+      "It's built in milestones. First, the foundation almost every embedded project takes for granted: a hand-written linker script, startup code, and my own C runtime (initializing memory before main), verified with GDB register and memory reads plus a poison-and-restore negative control — deliberately corrupting state to confirm the test would actually catch a failure. Then register-level GPIO, with the timing measured on a logic analyzer rather than eyeballed.",
+      "From there, communication peripherals: UART transmit on USART2, verified by disassembling the flashed ELF and decoding the protocol off the physical wire; then interrupt-driven UART receive with a ring buffer, checked against three scripted tests comparing predicted versus measured byte counts. A fifth milestone is in progress.",
+      "Everything is built, flashed, and debugged from a Raspberry Pi 5 over SSH, with the Nucleo attached by USB — arm-none-eabi-gcc, OpenOCD over SWD, gdb-multiarch, and an 8-channel logic analyzer driven with sigrok for verification. The recurring theme is the same one that matters most in firmware: don't trust that it works because the output looked right — prove it with instruments and controls.",
+    ],
+  },
 {
     slug: "caching-proxy",
     title: "HTTP Caching Proxy",

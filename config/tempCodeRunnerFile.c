@@ -1,0 +1,1 @@
+ item[strlen(item) - 1] = '\0'; // Remove the newline character from the input

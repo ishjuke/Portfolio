@@ -29,6 +29,49 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "a-correct-looking-output-proves-nothing",
+    title: "A correct-looking output proves nothing",
+    date: "2026-08-05",
+    summary:
+      "I wrote a bare-metal STM32 driver stack from the registers up — no HAL, no vendor code. The hard part wasn't the drivers. It was proving each one actually worked instead of assuming it did.",
+    content: `
+I spent this stretch building a driver stack for an STM32F401 from scratch in C — no HAL, no CubeMX, no vendor libraries, every register write derived from the reference manual. Blinking an LED bare-metal is a rite of passage. That wasn't the point. The point was to build the layer *underneath* the layer most embedded projects start from, and to prove each piece works rather than assume it does because the output looked right.
+
+That last part turned out to be the whole project.
+
+## The runtime that doesn't exist until you write it
+
+Before \`main()\` can run, something has to set the stack pointer, copy initialized globals from flash into RAM, and zero the uninitialized ones. On a normal computer that's already done for you. On bare metal it isn't — you write it: the linker script, the vector table, the startup code.
+
+Here's the thing about testing that startup code. Checking that a global equals \`0xDEADBEEF\` after reset proves the *value* is right — it does not prove your *copy loop* put it there. It could be right by accident.
+
+So I built a negative control. I poisoned RAM with garbage, disabled the copy loop, and confirmed the garbage *survived*. Then re-enabled the loop and confirmed it overwrote the poison. That only works because a warm reset doesn't cut power, so the poison persists into the next run and the startup code has to genuinely overwrite it. Now I had proof in both directions: the loop provably fixes garbage, and provably fails to when disabled. That's the difference between "it worked" and "I proved the mechanism works."
+
+## Three hours on a flat line
+
+Later, probing the UART transmit pin, I got nothing. Not noise, not errors — a flat line. I spent about three hours doubting my code.
+
+The code was fine. The board wasn't wired the way I assumed. Two solder bridges (off by default) route that pin to the on-board debugger's virtual COM port instead of to the header I was probing — the breakout header isn't an unconditional copy of every chip pin. It's in the board manual, in a table I hadn't read carefully enough.
+
+Every measurement I took during those three hours was correct. The *assumption underneath them* was wrong. That's a lesson you only learn by losing an afternoon to it, and it's one of the most useful I've picked up: when reality disagrees with you, question your assumptions before you question your instruments.
+
+## Proving it, four ways
+
+By the end, a pattern had formed — a correct-looking output is never evidence that the mechanism producing it is correct:
+
+- Confirming a value is right doesn't prove your code set it → disable the code, confirm it goes wrong.
+- Confirming the source says X doesn't prove the silicon does X → read the flashed binary.
+- Confirming a terminal shows the right character doesn't prove the wire carries it → decode the signal on a logic analyzer.
+- Confirming a buffer has a limit doesn't prove your overflow policy → check *which* bytes survived.
+
+Each of those caught something, or would have if it had been wrong. The interrupt-driven receive buffer got the same treatment — I verified not just that it capped at its limit, but that it dropped the *newest* byte rather than overwriting the oldest, by checking exactly which data survived.
+
+## The point
+
+It would be faster to blink the LED, see it blink, and move on. But "it looked right" is how bugs ship — the peripheral that works at -O0 and breaks at -O2, the buffer whose overflow policy is the opposite of what you think, the signal that isn't where you assume it is. The only defense is to prove the mechanism, not the output — and to keep a list of the things you turned out to be wrong about.
+`.trim(),
+  },
+  {
     slug: "my-benchmarks-were-lying",
     title: "My benchmarks were lying to me",
     date: "2026-08-04",
