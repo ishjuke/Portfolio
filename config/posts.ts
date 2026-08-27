@@ -29,6 +29,42 @@ export interface Post {
 
 export const posts: Post[] = [
     {
+    slug: "everything-downstream-of-one-number",
+    title: "Everything downstream of one number",
+    date: "2026-08-27",
+    summary:
+      "I bumped my STM32's clock from 16 to 84 MHz. It quietly broke three peripherals at once — and the way they broke told me something a single measurement never could.",
+    content: `
+After finishing the driver stack, I extended it: a real SysTick time base, then a faster clock. Taking the STM32 from its 16 MHz internal oscillator to 84 MHz via the PLL sounds like a one-line change. It isn't. It's a lesson in how much of your code is secretly derived from a number you stopped thinking about.
+
+## The cascade
+
+Three separate constants in my code were silently computed from 16 MHz, and none of them announced it:
+
+- the **UART baud divisor** (BRR)
+- the **I2C timing** (CCR and TRISE)
+- the **SysTick reload** value
+
+At 84 MHz, every one of them is wrong. Leave BRR alone and your UART is garbled. Leave the I2C timing and the bus wedges. Leave the SysTick reload and your millisecond tick runs 5.25× fast. One clock change, three broken peripherals — because all three were downstream of the same implicit assumption. Rederiving them (BRR to 365, I2C to 42/210/43, SysTick reload to 83999) is the easy part. *Seeing* that they were all coupled to one number is the point.
+
+## The ordering trap
+
+Flash memory can't keep up with the CPU at 84 MHz, so it needs wait states. The catch: you have to configure the wait states **before** you switch to the faster clock. Do it after, and the very first instruction fetch at the new speed outruns the flash and the chip hard-faults instantly. The order isn't a style preference; it's the difference between booting and not.
+
+## What the errors agreed on
+
+When I measured the three signals on a logic analyzer, they all came back fast — SysTick, I2C, and UART — but here's the thing: they were all fast by *the same proportion*, about 1.1–1.6%.
+
+That agreement is the interesting part. PCLK1 and HCLK are exact integer divisions of one SYSCLK — they *cannot* genuinely drift apart from each other. So if all three are off by the same fraction, it can't be three independent bugs in three drivers; it has to be one deviation in the single clock they all descend from. The shared error pointed upstream, at the oscillator itself, and ruled out the entire "I have three separate timing bugs" hypothesis without another measurement.
+
+The likely cause is HSI drift — though it's now outside the part's ±1% spec, so I wrote it up as a hypothesis with a cold-boot-versus-warm test to run, not a conclusion. A separate cross-check (the sample period read 1.494s, where a stale 16 MHz reload would have shown 286 ms) independently confirmed the new clock was actually live.
+
+## The lesson
+
+Two, really. First: a constant with no visible dependency is still a dependency — change the clock and you find out how many things were quietly leaning on it. Second, and more useful: *how* several things fail together is evidence. Three signals wrong by the same fraction isn't three bugs; it's one, upstream. The structure of the error tells you where to look — if you're willing to read it instead of just fixing each symptom.
+`.trim(),
+  },
+    {
     slug: "the-edge-is-the-event",
     title: "The edge is the event",
     date: "2026-08-26",
