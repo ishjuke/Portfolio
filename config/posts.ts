@@ -28,6 +28,42 @@ export interface Post {
 }
 
 export const posts: Post[] = [
+    {
+    slug: "the-edge-is-the-event",
+    title: "The edge is the event",
+    date: "2026-08-26",
+    summary:
+      "The last milestone of my bare-metal STM32 stack was an I2C driver reading a real sensor. Two bugs taught me more than the other four milestones combined — including one that only 'worked' by accident.",
+    content: `
+The final piece of my from-scratch STM32 driver stack was I2C — reading a real BME280 environmental sensor. Every milestone before it was a monologue: UART transmits into the void and doesn't care whether anything is listening. I2C is a conversation. It's a handshake, a slave device answers back, and every step can fail silently as nothing more than "still waiting." That difference is where the real learning was.
+
+## Bug 1: a wedged bus with no error to show for it
+
+The chip-ID read hung on the final receive. No error flags — no NACK, no bus error, no arbitration loss. Just a stuck peripheral.
+
+Here's the reasoning I'm proudest of. Before touching the bench, I read the status registers, and the address phase had **ACKed twice** — once for the write, once after the repeated start. An ACK is the slave *physically pulling the data line low* on the ninth clock. A disconnected wire can't fake that. A dead sensor can't fake that. A wrong address can't fake that. So the hardware was provably fine — I could rule out the entire "check your wiring" hypothesis without picking up a single probe.
+
+That pointed the finger at my own code, and it was a sequencing bug: I was requesting the STOP condition *before* clearing the address flag, which wedged the state machine with no error path to report it. Swap the two steps, and it read the correct chip ID on the first reflash. Diagnosed entirely from register state — no logic analyzer needed, which felt like a small redemption after an earlier milestone where I lost three hours to the opposite lesson.
+
+## Bug 2: the bug that only worked by accident
+
+This is the one that scared me. The first sensor read returned garbage — the reset-default register pattern, which happens to look exactly like the datasheet's "measurement skipped" value. The *second* read looked perfect. Same code. Different result.
+
+The cause: I was polling for a "measuring" flag to equal zero. But that condition is true in **two** places — before a measurement starts *and* after it finishes. My poll was winning the race and returning *instantly*, before the conversion had even begun, so I was reading registers that had never been written.
+
+The second read only worked because two unrelated debug print statements happened to delay the poll just long enough for the conversion to start. Remove the prints, and the bug comes back. **That is the worst shape a bug can have: correctness contingent on unrelated timing.** It works on your bench, passes your test, and detonates the moment someone deletes a log line.
+
+The fix is a principle I won't forget: don't level-check a flag that's only asserted transiently. Wait for the **0→1 edge** (the conversion genuinely started), then the **1→0 edge** (it genuinely finished). The *edge* is the event — the level is just a state you might catch on the wrong side of.
+
+## Proving it with a breath
+
+For verification I didn't trust a plausible-looking number. I breathed on the sensor and watched humidity spike to ~79% and decay back to its ~49% baseline over about thirteen seconds. That exponential decay back to baseline is a shape no stuck register, no sentinel value, and no scale error can produce — it only happens if the whole pipeline, bus to compensation math, is actually working, driven by a real physical process.
+
+## The through-line
+
+Five milestones, one lesson, and this one sharpened it: a correct-looking output is never evidence that the mechanism producing it is correct. The value that's right by accident, the flag that's true on the wrong side of the event, the reading that only survives because of a debug print — those are the failures that ship. The edge is the event. The breath is the proof. Everything else is a guess wearing a number.
+`.trim(),
+  },
   {
     slug: "a-correct-looking-output-proves-nothing",
     title: "A correct-looking output proves nothing",

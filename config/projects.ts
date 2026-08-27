@@ -53,22 +53,22 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  {
+   {
     slug: "stm32-drivers",
     title: "Bare-Metal STM32 Driver Stack",
     year: "2026",
-    status: "in progress",
+    status: "shipped",
     blurb:
-      "A from-scratch driver stack for the STM32F401RE (Cortex-M4) in C — no HAL, no CubeMX, no vendor libraries. Every register write derived from the reference manual, every peripheral verified on a logic analyzer.",
-    stack: ["C", "ARM Cortex-M4", "STM32", "Bare-Metal", "GDB", "Logic Analyzer"],
+      "A from-scratch driver stack for the STM32F401RE (Cortex-M4) in C — no HAL, no CubeMX, no vendor libraries. Five milestones from a hand-written C runtime to an I2C driver reading a real BME280 sensor, every peripheral verified against a physical stimulus.",
+    stack: ["C", "ARM Cortex-M4", "STM32", "Bare-Metal", "I2C", "GDB", "Logic Analyzer"],
     links: [
       { label: "Source", href: "https://github.com/ishjuke/stm32-drivers" },
     ],
     body: [
-      "A bare-metal driver stack for the STM32F401RE, written in C with no HAL, no CubeMX-generated code, and no vendor libraries — every register write derived directly from RM0368 and the F401xE datasheet. The point wasn't to make an LED blink. It was to build the layer underneath the layer most embedded projects start from — the linker script, the vector table, the C runtime — and then to prove each piece works rather than assume it does because the output looked right.",
-      "It's built in milestones. First, the foundation almost every embedded project takes for granted: a hand-written linker script, startup code, and my own C runtime (initializing memory before main), verified with GDB register and memory reads plus a poison-and-restore negative control — deliberately corrupting state to confirm the test would actually catch a failure. Then register-level GPIO, with the timing measured on a logic analyzer rather than eyeballed.",
-      "From there, communication peripherals: UART transmit on USART2, verified by disassembling the flashed ELF and decoding the protocol off the physical wire; then interrupt-driven UART receive with a ring buffer, checked against three scripted tests comparing predicted versus measured byte counts. A fifth milestone is in progress.",
-      "Everything is built, flashed, and debugged from a Raspberry Pi 5 over SSH, with the Nucleo attached by USB — arm-none-eabi-gcc, OpenOCD over SWD, gdb-multiarch, and an 8-channel logic analyzer driven with sigrok for verification. The recurring theme is the same one that matters most in firmware: don't trust that it works because the output looked right — prove it with instruments and controls.",
+      "A bare-metal driver stack for the STM32F401RE, written in C with no HAL, no CubeMX-generated code, and no vendor libraries — every register write derived directly from RM0368 and the datasheet. The point wasn't to make an LED blink. It was to build the layer underneath the layer most embedded projects start from — the linker script, the vector table, the C runtime — and then to prove each piece works rather than assume it does because the output looked right.",
+      "The foundation came first: a hand-written linker script, startup code, and my own C runtime (initializing memory before main), verified with GDB plus a poison-and-restore negative control — deliberately corrupting state to confirm the test could actually catch a failure. Then register-level GPIO (timing measured on a logic analyzer), UART transmit (verified by disassembling the flashed ELF and decoding the wire), and interrupt-driven UART receive with a lock-free single-producer/single-consumer ring buffer — reasoning explicitly about why aligned 32-bit accesses on a Cortex-M4 are atomic and what volatile is and isn't doing.",
+      "The final milestone was the hardest: an I2C driver reading a real BME280 environmental sensor. Unlike UART, I2C is a handshake — every step can fail silently as 'still waiting,' and the bus is open-drain wired-AND, so the pins had to be configured accordingly or risk fighting the pull-ups. Two bugs made it real. One was a wedged state machine with no error flag set — diagnosed entirely from CR1/SR1/SR2 register state by reasoning that the slave had physically ACKed twice (which no dead wire can fake), ruling out hardware and localizing it to a STOP-before-ADDR-clear sequencing violation. The other was a poll predicate that was true both before and after a conversion, so it returned instantly and read stale registers — fixed by waiting for the 0→1 then 1→0 edge, because the edge is the event, not the level. A 64-bit divide in the pressure math even surfaced a linker-ordering issue with libgcc's runtime, resolved from first principles.",
+      "Verification stayed physical throughout: the humidity path was confirmed by breathing on the sensor and watching it spike to ~79% and decay back to baseline over seconds — a shape no stuck register or scale error can fake — and pressure was cross-checked against a corrected weather-station reading. Everything was built, flashed, and debugged from a Raspberry Pi 5 over SSH with a logic analyzer on hand. Across all five milestones the through-line held: a correct-looking output is never evidence that the mechanism producing it is correct — you prove it with controls, edges, disassembly, and physical stimulus, or you don't know it works at all.",
     ],
   },
 {
