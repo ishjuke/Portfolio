@@ -42,6 +42,21 @@ export const categoryOrder: { key: ExperienceCategory; heading: string }[] = [
 
 export const experiences: Experience[] = [
   {
+    slug: "vex-u-software-lead",
+    category: "leadership",
+    title: "Software Project Lead",
+    org: "Queen's VEX U Robotics",
+    period: "2026 – present",
+    summary:
+      "Lead the software subteam on controls and autonomy, written in Rust/C/C++.",
+    tags: ["Controls", "Autonomy", "Rust", "C/C++", "Leadership"],
+    body: [
+      "I lead the software subteam at Queen's VEX U Robotics, where we own the controls and autonomy stack for the team's robots — written in Rust, C, and C++.",
+      "I came up through the team as a general member in my first year. The outgoing lead taught me MPC, and that's still the thing I point to when people ask what made the controls side click for me — going from tuning gains by feel to actually reasoning about a model and a horizon.",
+      "Now I run the subteam's meetings, check-ins, and reporting to directors, and coordinate across mechanical and software so the two sides stay in step. It's the same instinct as before — hardware and the logic driving it meet somewhere, and someone has to make sure both halves are looking at the same problem.",
+    ],
+  },
+  {
     slug: "mental-health-steward",
     category: "leadership",
     title: "Mental Health Steward, Computer Engineering",
