@@ -41,13 +41,13 @@ For a friend's birthday this fall, I wrote him a letter. Not a text or a card wi
 
 I write technical things all the time. A README has a structure: what it does, how it was verified, what went wrong. A letter has none of that. There's no datasheet for telling someone what they mean to you.
 
-The first few lines felt awkward. Guys don't usually say this stuff to each other. We show it by buying the next round, counting each other's sets at the gym, or sending notes before an exam. Writing it down meant I couldn't hide behind a joke.
+Lowkey, it felt like writing a letter in those movies, writing in cursive with barely any light source. Guys don't usually say this stuff to each other. We show it by buying the next round, counting each other's sets at the gym, or sending notes before an exam. Writing it down meant I couldn't hide behind a joke.
 
 ## What came out
 
 Once I started, it stopped being hard. I wrote about the dumb memories, like Whopper Wednesdays and team meetings I fell asleep in. Then I wrote the real thing: he was one of the first people at Queen's to tell me my past doesn't define me, and I believed him.
 
-I'd never actually thanked him for that. I had assumed he knew.
+I wanted to honour the moments we had together, and make sure he would remember them for the rest of his life, because I felt like a brother, even if we're not related by blood.
 
 ## How he took it
 
