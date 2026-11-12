@@ -33,7 +33,7 @@ export const posts: Post[] = [
     title: "Saying it on paper",
     date: "2026-11-12",
     summary:
-      "I wrote a friend a letter for his birthday. It was harder than any lab report, and it taught me something about the things we assume people already know.",
+      "I wrote a friend a letter for his birthday. It was harder than any lab report, and it taught me something about making good moments last.",
     content: `
 For a friend's birthday this fall, I wrote him a letter. Not a text or a card with a signature, an actual handwritten letter. We met in first year when we were put on the same design team. The project flopped halfway through. The friendship didn't.
 
@@ -47,7 +47,7 @@ Lowkey, it felt like writing a letter in those movies, writing in cursive with b
 
 Once I started, it stopped being hard. I wrote about the dumb memories, like Whopper Wednesdays and team meetings I fell asleep in. Then I wrote the real thing: he was one of the first people at Queen's to tell me my past doesn't define me, and I believed him.
 
-I wanted to honour the moments we had together, and make sure he would remember them for the rest of his life, because I felt like a brother, even if we're not related by blood.
+I wanted to honour the moments we had together, and make sure he would remember them for the rest of his life, because he felt like a brother to me, even if we're not related by blood.
 
 ## How he took it
 
@@ -59,7 +59,7 @@ Did my hand cramp and hurt afterwards? Yeah, for a bit. But it was worth it. To 
 
 ## The lesson
 
-It's the same one my projects keep teaching me, pointed at people this time: **don't assume, verify.** I assumed my friends knew what they meant to me. That's an unverified claim. A letter is the measurement.
+It's close to the one my projects keep teaching me, pointed at people this time: **write it down.** In engineering, a result that isn't documented might as well not have happened. Good moments are the same. We'd had a year of them, and I didn't want them to live only in two people's memories. A letter makes them permanent.
 
 It cost nothing but a sore hand. If someone made your first year better, tell them in writing, where they can keep it.
 `.trim(),
