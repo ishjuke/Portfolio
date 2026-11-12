@@ -28,6 +28,43 @@ export interface Post {
 }
 
 export const posts: Post[] = [
+  {
+    slug: "the-semester-so-far-measured",
+    title: "The semester so far, measured",
+    date: "2026-11-12",
+    summary:
+      "Midterms are nearly done. Here's an honest inventory of second year so far: what shipped, what didn't land, and what's next.",
+    content: `
+Most of my notes are about one bug or one benchmark. This one is a checkpoint. Midterms are almost over, and I wanted to write down what the first half of second year actually added up to. I'm doing it the way I'd write up a measurement: what I expected, what I got, and where they disagree.
+
+## What shipped
+
+- **I got published.** In September the Queen's Journal ran [my piece](https://www.queensjournal.ca/i-spent-my-first-year-trying-to-belong-to-my-faculty-society-to-no-avail/) on spending first year trying to belong to a faculty society, and what I learned when it didn't work out. It was the hardest thing I've written and the one I'm proudest of.
+- **I worked Orientation Week with OTIS.** I was on the logistics and operations team that keeps the events running for the incoming first-years. It was a week of radios, setup, and teardown, and I'd do the toil again for the love of the game.
+- **I'm leading a software project on QVEX.** Last year I was on the electrical subteam designing the robot's logic board. This year I'm a Software Project Lead, learning a Rust codebase and how to run a team, both at once.
+- **I'm the Mental Health Steward for Computer Engineering.** I filmed and edited a "day in my life" video for EngWell, which taught me that editing takes three times longer than filming. And today, as I write this, I'm co-hosting a second-year ECE study lounge with the Electrical Engineering steward.
+- **I started playing bass in a cover band.** I'm a beginner, and that's the point.
+- **This site got a face.** There's finally a headshot on the homepage, and the menu no longer falls off the edge of a phone screen.
+
+## What didn't land (yet)
+
+I applied to my first round of hardware internships and got my first interview. Then I found out the term was sixteen months, not four, and that doesn't fit where I am in my degree. I also went to a recruiting event where the company was mostly looking for third-years.
+
+Neither was a no on the work itself. Both told me the same thing my projects keep telling me: the result was fine, but the assumption underneath it was off. I assumed this was the year for the big internship. The data says next year is, and that this year is for building what makes that application impossible to ignore.
+
+## The part that doesn't go on a resume
+
+I also had fun, and I'm counting it. Late dinners with friends, birthdays, shows, a Halloween that landed on a Saturday. First year I treated that time as something stolen from work. This year I've noticed the weeks I see my friends are the weeks the work goes better.
+
+## What's next
+
+- **A custom STM32 board**, designed in KiCad, fabricated, and brought up with my own drivers.
+- **Python bench automation** that captures signals and passes or fails them against predictions, so verification stops being manual.
+- **FreeRTOS** on top of the bare-metal stack.
+
+More than any single project, the thing I want to keep is the habit of checking the assumption before trusting the result. It works on a clock tree, and it works on a career plan too.
+`.trim(),
+  },
     {
     slug: "everything-downstream-of-one-number",
     title: "Everything downstream of one number",
