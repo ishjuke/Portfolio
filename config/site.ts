@@ -12,6 +12,13 @@ export const site = {
   // A short handle/initials shown in the nav mark. Keep it tiny (1–3 chars).
   mark: "IB",
 
+  // Headshot shown in the hero. The file lives in /public (e.g. public/headshot.jpg).
+  // Set src to "" to hide the photo.
+  headshot: {
+    src: "/headshot.jpg",
+    alt: "Ishan Bijukuchhay, smiling, in a navy sweater over a white collared shirt",
+  },
+
   // The one-line thesis under your name in the hero. This is the most important
   // sentence on the site — say what you make and why it matters to you.
   tagline:
