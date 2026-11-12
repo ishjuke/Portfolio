@@ -29,6 +29,42 @@ export interface Post {
 
 export const posts: Post[] = [
   {
+    slug: "saying-it-on-paper",
+    title: "Saying it on paper",
+    date: "2026-11-12",
+    summary:
+      "I wrote a friend a letter for his birthday. It was harder than any lab report, and it taught me something about making good moments last.",
+    content: `
+For a friend's birthday this fall, I wrote him a letter. Not a text or a card with a signature, an actual handwritten letter. We met in first year when we were put on the same design team. The project flopped halfway through. The friendship didn't.
+
+## Why it was hard
+
+I write technical things all the time. A README has a structure: what it does, how it was verified, what went wrong. A letter has none of that. There's no datasheet for telling someone what they mean to you.
+
+Lowkey, it felt like writing a letter in those movies, writing in cursive with barely any light source. Guys don't usually say this stuff to each other. We show it by buying the next round, counting each other's sets at the gym, or sending notes before an exam. Writing it down meant I couldn't hide behind a joke.
+
+## What came out
+
+Once I started, it stopped being hard. I wrote about the dumb memories, like Whopper Wednesdays and team meetings I fell asleep in. Then I wrote the real thing: he was one of the first people at Queen's to tell me my past doesn't define me, and I believed him.
+
+I wanted to honour the moments we had together, and make sure he would remember them for the rest of his life, because he felt like a brother to me, even if we're not related by blood.
+
+## How he took it
+
+He teared up and was sniffling, because no one in his life had ever given him something like that. He told me "you're so sweet." That was an honour, and not something I'd ever heard him say to my face, because most guys usually don't do that, probably because of societal expectations.
+
+I guess I feel things more deeply than most guys. I'm more empathetic, and I return kindness, even after pain, because I don't wish my suffering on anyone else.
+
+Did my hand cramp and hurt afterwards? Yeah, for a bit. But it was worth it. To this day, my friend still has my handwritten letter on his wall, because it was that special and thoughtful.
+
+## The lesson
+
+It's close to the one my projects keep teaching me, pointed at people this time: **write it down.** In engineering, a result that isn't documented might as well not have happened. Good moments are the same. We'd had a year of them, and I didn't want them to live only in two people's memories. A letter makes them permanent.
+
+It cost nothing but a sore hand. If someone made your first year better, tell them in writing, where they can keep it.
+`.trim(),
+  },
+  {
     slug: "the-semester-so-far-measured",
     title: "The semester so far, measured",
     date: "2026-11-12",
