@@ -40,7 +40,7 @@ Most of my notes are about one bug or one benchmark. This one is a checkpoint. M
 ## What shipped
 
 - **I got published.** In September the Queen's Journal ran [my piece](https://www.queensjournal.ca/i-spent-my-first-year-trying-to-belong-to-my-faculty-society-to-no-avail/) on spending first year trying to belong to a faculty society, and what I learned when it didn't work out. It was the hardest thing I've written and the one I'm proudest of.
-- **I worked Orientation Week with OTIS.** I was on the logistics and operations team that keeps the events running for the incoming first-years. It was a week of radios, setup, and teardown, and I'd do it again.
+- **I worked Orientation Week with OTIS.** I was on the logistics and operations team that keeps the events running for the incoming first-years. It was a week of radios, setup, and teardown, and I'd do the toil again for the love of the game.
 - **I'm leading a software project on QVEX.** Last year I was on the electrical subteam designing the robot's logic board. This year I'm a Software Project Lead, learning a Rust codebase and how to run a team, both at once.
 - **I'm the Mental Health Steward for Computer Engineering.** I filmed and edited a "day in my life" video for EngWell, which taught me that editing takes three times longer than filming. And today, as I write this, I'm co-hosting a second-year ECE study lounge with the Electrical Engineering steward.
 - **I started playing bass in a cover band.** I'm a beginner, and that's the point.
